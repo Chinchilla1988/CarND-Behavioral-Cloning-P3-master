@@ -45,17 +45,13 @@ In the last step I added the upsampled indexvectors to the indexvector containin
 ![Figure 5](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/finalcut.png?raw=true)
 
 ---
-
-## 3
 ## 3 Image Preprocessing
----
 As stated in Chapter 1 I decided to train my model by Data Augmentation not by self driving. That's why I decided to use the following preprocess techniques:
 The Function draw_image decides randomly which image will be drawn by a given Index to feed it to my pipeline and my model. By the randomly set number nb it decides if it's the left, center or right image. The drawn image is given a modified steering angle.
 The Function brightness is scaling the V-Value of the transformed image. The image gets lighter or darker depending on the randomly drawn number.
 The function translate, translate the image horizontally and vertically and is manipulating the corresponding steering angle. The parameters have been tuned empirically.
 The function rot is rotating the image. The steering angle manipulation factor has been tuned empirically  
 As the functionname states this function crops and resizes the image.
----
 
 ## 4. Nvidia Model
 
@@ -74,47 +70,9 @@ The architecture is presented in image 6.
 
 # description in here
 
-
-
-
-
-
 ## 5. Data Generator
 
 The function generator has been modified. It doesn't strip images as stated in the lecture. It receives as Input the given Index as a scalar; center, left and right images and the steering angle as a vector. The image and steering angle is chosen by the given index.
-
-def generator(index,center,left,right,steering_angle, batch_size=32):
-    num_samples=len(index)
-    np.random.shuffle(index)
-    counter=0
-    
-    
-    while 1: # Loop forever so the generator never terminates
-        #np.random.shuffle(index)
-        
-        
-        
-        for offset in range(0, num_samples, batch_size):
-            images = []
-            angles = []
-            
-            batch_samples = index[offset:offset+batch_size]
-            
-
-            
-            for batch_sample in batch_samples:
-                image,angle = draw_image(batch_sample,center,left, right,steering_angle)
-                img,ang=pipe(image,angle)
-                
-                
-                images.append(img)
-                angles.append(float(ang))                
-                
-            X_train = np.array(images)
-            y_train = np.array(angles)
-            yield sklearn.utils.shuffle(X_train, y_train)
-
-
 
 ## 6 Epoch and Loss
 
@@ -128,10 +86,6 @@ Epoch 1/5
 Epoch 125:
 Epoch 5/5
 9488/9488 [==============================] - 55s - loss: 0.1872 - val_loss: 0.1738
-
-
-
-
 ## 7 Lessons learned
 
 Data Augmentation is a powerful technique to create your own unique dataset. Also I don't have to waste my time driving by myself to create the necessary data. 
