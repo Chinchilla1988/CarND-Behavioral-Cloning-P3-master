@@ -16,13 +16,13 @@
 
 [//]: # (Image References)
 
-[image1]: ./examples/givendataset.png "Given Dataset"
-[image2]: ./examples/augmented_Dataset.png "Augmented Dataset"
-[image3]: ./examples/Almost_balanced.png "Almost balanced Dataset"
-[image4]: ./examples/upsample.png "Upsampled steering angles abs(alpha) >= 0.5"
-[image5]: ./examples/finalcut.png "Finally cutted Dataset"
-[image6]: ./examples/nvidia.png "NVIDIA model Architecture"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: examples/givendataset.png 
+[image2]: examples/augmented_Dataset.png "Augmented Dataset"
+[image3]: examples/Almost_balanced.png "Almost balanced Dataset"
+[image4]: examples/upsample.png "Upsampled steering angles abs(alpha) >= 0.5"
+[image5]: examples/finalcut.png "Finally cutted Dataset"
+[image6]: examples/nvidia.png "NVIDIA model Architecture"
+[image7]: examples/placeholder_small.png "Flipped Image"
 ---
 ## 1. Data Visualisation
 ---
@@ -37,7 +37,7 @@ To balance the given Dataset I decided to cut the given Dataset to approximate a
 ---
 First I separated all Indices with a steering angle equally zero and all Indices unequally zero. Then I created a Vector which contains all Indices with a steering angle unequally zero. Inside a for loop i searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way i doubled the images to balance my Dataset. In the next step i added my vector containing the flipped images and steering angles and added them to the given dataset. 
 
-[image2]:
+![alt text][image2]
 
 
 As you can see the Dataset still contains a bias to a steering angle equally zero. In this step i downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices: 
@@ -76,7 +76,7 @@ for i in range(bin*2-2):
 ---
 In image 3 you can observe the almost balanced dataset:
 
-[image3]:
+![alt text][image3]
 
 The cutted Dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. To raise the samples of all steering angles abs(alpha) >= 0.5 I upsampled all steering angles abs(alpha) >= 0.5 by the following function:
 ---
@@ -92,11 +92,11 @@ def createIndex(index,number_of_repetition):
 
 In image 4 are the upsampled steering angles represented:
 
-[image4]:
+![alt text][image4]
 
 ---
 In the last step I added the upsampled indexvectors to the indexvector containing the indices from the given and the flipped dataset. Then the augmented Indexvector has been cutted. The final result is given in image5:
-[image5]:
+![alt text][image5]
 
 ---
 
@@ -238,7 +238,8 @@ def crop_image(img,steering_angle):
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
 The architecture is presented in image 6.
 
-[image6]:
+[image6]:![alt text][image6]
+
 
 
 
