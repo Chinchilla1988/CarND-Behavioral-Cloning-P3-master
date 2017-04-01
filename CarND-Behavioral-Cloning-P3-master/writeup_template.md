@@ -14,22 +14,12 @@
 * 6. Epoch and Loss
 
 
-[//]: # (Image References)
-
-[image1]: ./examples/givendataset.png 
-[image2]: ./examples/augmented_Dataset.png "Augmented Dataset"
-[image3]: ./examples/Almost_balanced.png "Almost balanced Dataset"
-[image4]: ./examples/upsample.png "Upsampled steering angles abs(alpha) >= 0.5"
-[image5]: ./examples/finalcut.png "Finally cutted Dataset"
-[image6]: ./examples/nvidia.png "NVIDIA model Architecture"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
----
 ## 1. Data Visualisation
 ---
 I decided to work with the given Udacity Dataset because I wanted to focus myself on the topic of Data Augmentation. My goal was to train my model so my car is going to pass both tracks only by using Data Augmentation.
 In the first step i visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
 
-![alt text][image1] 
+![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)
 
 To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
 
@@ -37,11 +27,10 @@ To balance the given Dataset I decided to cut the given Dataset to approximate a
 ---
 First I separated all Indices with a steering angle equally zero and all Indices unequally zero. Then I created a Vector which contains all Indices with a steering angle unequally zero. Inside a for loop i searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way i doubled the images to balance my Dataset. In the next step i added my vector containing the flipped images and steering angles and added them to the given dataset. 
 
-![alt text](/examples/givendataset.png)
-
+![Given Dataset](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/augmented_Dataset.png)
 
 As you can see the Dataset still contains a bias to a steering angle equally zero. In this step i downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices: 
----
+
 bin=100
 threshold=100
 
@@ -67,19 +56,16 @@ for i in range(bin*2-2):
                 if float(steer[index[j]])<=-0.35 and float(steer[index[j]])>=-.95:
                     t=index[j]
                     index_cutminus.append(t)
-                #if float(steer[index[j]])<-0.75 or float(steer[index[j]])>=-1:
-                #    index_cutminusk.append(index[j])
-                #if float(steer[index[j]])>0.75 or float(steer[index[j]])<=1:
-                   # index_cutplusk.append(index[j])
+                
             else:
                 continue
----
+
 In image 3 you can observe the almost balanced dataset:
 
-![alt text][image3]
+![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/Almost_balanced.png)
 
 The cutted Dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. To raise the samples of all steering angles abs(alpha) >= 0.5 I upsampled all steering angles abs(alpha) >= 0.5 by the following function:
----
+
 def createIndex(index,number_of_repetition):
     ind=[]
     for i in range(len(index)):
@@ -88,15 +74,15 @@ def createIndex(index,number_of_repetition):
             
         
     return ind
----
+
 
 In image 4 are the upsampled steering angles represented:
 
-![alt text][image4]
+![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/upsample.png)
 
 ---
 In the last step I added the upsampled indexvectors to the indexvector containing the indices from the given and the flipped dataset. Then the augmented Indexvector has been cutted. The final result is given in image5:
-![alt text][image5]
+![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/finalcut.png)
 
 ---
 
@@ -110,18 +96,16 @@ The Function draw_image decides randomly which image will be drawn by a given In
 
 def draw_image(index,center, left, right,steer):
     nb=np.random.randint(3,size=1)
-    ## left
+
     if nb == 0:
         image=left[index]
         steering=float((steer[index])) + float((0.25))
-    ## center    
+        
     if nb == 1:
         image=center[index]
         steering=float(steer[index])
         
-    ## right    
     if nb == 2:
-        
         image=right[index]
         steering=float((steer[index])) - float((0.25))
         
@@ -143,7 +127,6 @@ def brightness(img,steering_angle):
 The function translate, translate the image horizontally and vertically and is manipulating the corresponding steering angle. The parameters have been tuned empirically.
 
 def translate(img,steering_angle,tx,ty):
-    
     measurement=None
     nb=None
     k=None
@@ -154,12 +137,9 @@ def translate(img,steering_angle,tx,ty):
     
     trans=tx*random.uniform(0,1)
     trans_up=ty*random.uniform(0,1)
-    ## horizontally shift
     #print("nb: "+str(nb))
     
     if nb == 0:
-        
-        
         if k == 0:
             ## shift left
             
@@ -181,7 +161,6 @@ def translate(img,steering_angle,tx,ty):
         ### lenkwinkeländerung eintragen
     ## vertical shift
     if nb == 1:
-        
         if k == 0:
             ## shift up
             M = np.float32([[1,0,0],[0,1,trans_up]])
@@ -238,8 +217,7 @@ def crop_image(img,steering_angle):
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
 The architecture is presented in image 6.
 
-[image6]:![alt text][image6]
-
+![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/nvidia.png)
 
 
 
@@ -280,7 +258,6 @@ def generator(index,center,left,right,steering_angle, batch_size=32):
 
             
             for batch_sample in batch_samples:
-                
                 image,angle = draw_image(batch_sample,center,left, right,steering_angle)
                 img,ang=pipe(image,angle)
                 
