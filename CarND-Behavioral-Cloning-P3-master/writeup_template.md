@@ -19,7 +19,7 @@
 I decided to work with the given Udacity Dataset because I wanted to focus myself on the topic of Data Augmentation. My goal was to train my model so my car is going to pass both tracks only by using Data Augmentation.
 In the first step i visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
 
-![Given Dataset](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)
+[![Given Dataset](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)
 
 To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
 
@@ -29,52 +29,12 @@ First I separated all Indices with a steering angle equally zero and all Indices
 
 ![Figure 2](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/augmented_Dataset.png)
 
-As you can see the Dataset still contains a bias to a steering angle equally zero. In this step i downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices: 
-
-bin=100
-threshold=100
-
-check=[]
-index_cutplus=[]
-index_cutminusl=[]
-index_cutminus=[]
-index_cutminusk=[]
-
-
-for i in range(bin*2-2):
-    k=-1.02+2*i/bin
-    h=-1.+2*i/bin
-    counter=0
-    for j in range(len(index)):
-        if (float(steer[index[j]])>=k and float(steer[index[j]])<=h):
-            if counter<threshold:
-                check.append(index[j])
-                counter+=1
-                if float(steer[index[j]])>= 0.35 and float(steer[index[j]])<=0.95:
-                    l=index[j]
-                    index_cutplus.append(l)
-                if float(steer[index[j]])<=-0.35 and float(steer[index[j]])>=-.95:
-                    t=index[j]
-                    index_cutminus.append(t)
-                
-            else:
-                continue
-
+As you can see the Dataset still contains a bias to a steering angle equally zero. In this step i downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices.
 In image 3 you can observe the almost balanced dataset:
 
 ![Figure 3](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/Almost_balanced.png)
 
-The cutted Dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. To raise the samples of all steering angles abs(alpha) >= 0.5 I upsampled all steering angles abs(alpha) >= 0.5 by the following function:
-
-def createIndex(index,number_of_repetition):
-    ind=[]
-    for i in range(len(index)):
-        for k in range(number_of_repetition):
-            ind.append(index[i])
-            
-        
-    return ind
-
+The cutted Dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. To raise the samples of all steering angles abs(alpha) >= 0.5 I upsampled all steering angles abs(alpha) >= 0.5.
 
 In image 4 are the upsampled steering angles represented:
 
@@ -89,127 +49,12 @@ In the last step I added the upsampled indexvectors to the indexvector containin
 ## 3
 ## 3 Image Preprocessing
 ---
-
 As stated in Chapter 1 I decided to train my model by Data Augmentation not by self driving. That's why I decided to use the following preprocess techniques:
-
 The Function draw_image decides randomly which image will be drawn by a given Index to feed it to my pipeline and my model. By the randomly set number nb it decides if it's the left, center or right image. The drawn image is given a modified steering angle.
-
-def draw_image(index,center, left, right,steer):
-    nb=np.random.randint(3,size=1)
-
-    if nb == 0:
-        image=left[index]
-        steering=float((steer[index])) + float((0.25))
-        
-    if nb == 1:
-        image=center[index]
-        steering=float(steer[index])
-        
-    if nb == 2:
-        image=right[index]
-        steering=float((steer[index])) - float((0.25))
-        
-    #plt.imshow(image)
-    return image,steering
-
-
 The Function brightness is scaling the V-Value of the transformed image. The image gets lighter or darker depending on the randomly drawn number.
-
-def brightness(img,steering_angle):
-    img=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-    scale=0.2+np.random.uniform(0,1)
-    img[:,:,2]=img[:,:,2]*scale
-    img=cv2.cvtColor(img,cv2.COLOR_HSV2BGR)
-    img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-    steer=steering_angle
-    return img, steer
-
 The function translate, translate the image horizontally and vertically and is manipulating the corresponding steering angle. The parameters have been tuned empirically.
-
-def translate(img,steering_angle,tx,ty):
-    measurement=None
-    nb=None
-    k=None
-    
-    rows,cols = img.shape[0],img.shape[1]
-    nb=np.random.randint(2,size=1)
-    k=np.random.randint(2,size=1)
-    
-    trans=tx*random.uniform(0,1)
-    trans_up=ty*random.uniform(0,1)
-    #print("nb: "+str(nb))
-    
-    if nb == 0:
-        if k == 0:
-            ## shift left
-            
-            M = np.float32([[1,0,-trans],[0,1,0]])
-            
-            measurement=float(steering_angle+(trans/cols)*1.5)
-            
-        if k == 1:
-            ## shift right
-            
-            M = np.float32([[1,0,trans],[0,1,0]])
-            
-            measurement=float(steering_angle-(trans/cols)*1.5)
-            
-        #print('shift '+str(k))
-        img = cv2.warpAffine(img,M,(cols,rows))
-
-        
-        ### lenkwinkeländerung eintragen
-    ## vertical shift
-    if nb == 1:
-        if k == 0:
-            ## shift up
-            M = np.float32([[1,0,0],[0,1,trans_up]])
-            
-            measurement=float(steering_angle)
-            
-        if k == 1:
-            ## shift down
-            M = np.float32([[1,0,0],[0,1,-trans_up]])
-            
-            measurement=float(steering_angle)
-            
-        img = cv2.warpAffine(img,M,(cols,rows))    
-    
-    return img,measurement
-
-The function rot is rotating the image. The steering angle manipulation factor has been tuned empirically
-def rot(img,steering_angle):
-    rows,cols = img.shape[0],img.shape[1]
-    scale=np.random.uniform(0,1)
-    angle_rot=25*scale
-    k=np.random.randint(low=0,high=2,size=1)
-    scale=np.random.uniform(0,1)
-    if k == 0:
-        ## rot left
-        M = cv2.getRotationMatrix2D((cols/2,rows/2),angle_rot,1)
-       #        measurement=float(steering_angle+(angle_rot*8/360))
-
-        measurement=float(steering_angle+(angle_rot*10/360))
-        
-    if k == 1:
-        ## rot right
-        M = cv2.getRotationMatrix2D((cols/2,rows/2),-angle_rot,1)
-        #        measurement=float(steering_angle+(angle_rot*8/360))
-
-        measurement=float(steering_angle-(angle_rot*10/360))
-    
-   
-    img = cv2.warpAffine(img,M,(cols,rows))   
-    return img, measurement
-    
+The function rot is rotating the image. The steering angle manipulation factor has been tuned empirically  
 As the functionname states this function crops and resizes the image.
-
-def crop_image(img,steering_angle):
-    crop_img=img[60:140,0:360]
-    res = cv2.resize(crop_img,(200, 66), interpolation = cv2.INTER_LINEAR)
-    measurement=float(steering_angle)
-    return res,measurement
-
 ---
 
 ## 4. Nvidia Model
