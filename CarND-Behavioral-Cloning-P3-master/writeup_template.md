@@ -19,7 +19,7 @@
 I decided to work with the given Udacity Dataset because I wanted to focus myself on the topic of Data Augmentation. My goal was to train my model so my car is going to pass both tracks only by using Data Augmentation.
 In the first step i visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
 
-![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)
+![Figure 1](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)
 
 To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
 
@@ -27,7 +27,7 @@ To balance the given Dataset I decided to cut the given Dataset to approximate a
 ---
 First I separated all Indices with a steering angle equally zero and all Indices unequally zero. Then I created a Vector which contains all Indices with a steering angle unequally zero. Inside a for loop i searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way i doubled the images to balance my Dataset. In the next step i added my vector containing the flipped images and steering angles and added them to the given dataset. 
 
-![Given Dataset](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/augmented_Dataset.png)
+![Figure 2](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/augmented_Dataset.png)
 
 As you can see the Dataset still contains a bias to a steering angle equally zero. In this step i downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices: 
 
@@ -62,7 +62,7 @@ for i in range(bin*2-2):
 
 In image 3 you can observe the almost balanced dataset:
 
-![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/Almost_balanced.png)
+![Figure 3](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/Almost_balanced.png)
 
 The cutted Dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. To raise the samples of all steering angles abs(alpha) >= 0.5 I upsampled all steering angles abs(alpha) >= 0.5 by the following function:
 
@@ -78,11 +78,11 @@ def createIndex(index,number_of_repetition):
 
 In image 4 are the upsampled steering angles represented:
 
-![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/upsample.png)
+![Figure 4](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/upsample.png?raw=true)
 
 ---
 In the last step I added the upsampled indexvectors to the indexvector containing the indices from the given and the flipped dataset. Then the augmented Indexvector has been cutted. The final result is given in image5:
-![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/finalcut.png)
+![Figure 5](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/finalcut.png?raw=true)
 
 ---
 
@@ -217,7 +217,7 @@ def crop_image(img,steering_angle):
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
 The architecture is presented in image 6.
 
-![alt text](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/nvidia.png)
+![Figure 6](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/nvidia.png?raw=true)
 
 
 
