@@ -28,7 +28,8 @@
 ---
 I decided to work with the given Udacity Dataset because I wanted to focus myself on the topic of Data Augmentation. My goal was to train my model so my car is going to pass both tracks only by using Data Augmentation.
 In the first step i visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
-[image1]: 
+
+![alt text][image1] 
 
 To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
 
