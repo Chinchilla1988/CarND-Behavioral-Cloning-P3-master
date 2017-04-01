@@ -16,13 +16,13 @@
 
 [//]: # (Image References)
 
-[image1]: examples/givendataset.png 
-[image2]: examples/augmented_Dataset.png "Augmented Dataset"
-[image3]: examples/Almost_balanced.png "Almost balanced Dataset"
-[image4]: examples/upsample.png "Upsampled steering angles abs(alpha) >= 0.5"
-[image5]: examples/finalcut.png "Finally cutted Dataset"
-[image6]: examples/nvidia.png "NVIDIA model Architecture"
-[image7]: examples/placeholder_small.png "Flipped Image"
+[image1]: ./examples/givendataset.png 
+[image2]: ./examples/augmented_Dataset.png "Augmented Dataset"
+[image3]: ./examples/Almost_balanced.png "Almost balanced Dataset"
+[image4]: ./examples/upsample.png "Upsampled steering angles abs(alpha) >= 0.5"
+[image5]: ./examples/finalcut.png "Finally cutted Dataset"
+[image6]: ./examples/nvidia.png "NVIDIA model Architecture"
+[image7]: ./examples/placeholder_small.png "Flipped Image"
 ---
 ## 1. Data Visualisation
 ---
