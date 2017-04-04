@@ -20,7 +20,6 @@ I decided to work with the given Udacity Dataset because I wanted to focus mysel
 In the first step I visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
 
 ![Given Dataset](examples/givendataset.png?raw=true)
-![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
 
 To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
 
@@ -28,19 +27,19 @@ To balance the given Dataset I decided to cut the given Dataset to approximate a
 ---
 First I created a vector which contains all indices with a steering angle unequally zero. Inside a for loop I searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way I doubled the images to balance my dataset. In the next step I added my vector containing the flipped images and steering angles and added them to the given dataset. 
 
-![Figure 2](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/augmented_Dataset.png)
+![Figure 2](/examples/augmented_Dataset.png?raw=true)
 
 As you can see the Dataset still contains a bias to a steering angle equally zero. In this step I downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices.
 In image 3 you can observe the almost balanced dataset:
 
-![Figure 3](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/Almost_balanced.png)
+![Figure 3](examples/Almost_balanced.png?raw=true)
 
 The cutted dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. For balancing all steering angles abs(alpha) >= 0.5 has been upsampled, as presented in image 4.
 
-![Figure 4](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/upsample.png?raw=true)
+![Figure 4](examples/upsample.png?raw=true)
 
 In the last step I added the all indices of the flipped images to the indexvector. The augmented indexvector contains all indices to all given and flipped images. In the final step the indexvector has been cut. The final result is given in image5:
-![Figure 5](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/finalcut.png?raw=true)
+![Figure 5](examples/finalcut.png?raw=true)
 
 ---
 ## 3 Image Preprocessing
@@ -62,7 +61,7 @@ In the last step we crop the image to cut out the Hood and the background of the
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
 The architecture is presented in image 6.
 
-![Figure 6](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/nvidia.png?raw=true)
+![Figure 6](examples/nvidia.png?raw=true)
 
 
 
