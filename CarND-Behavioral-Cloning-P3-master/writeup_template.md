@@ -6,52 +6,55 @@
 
 *Table of Contents*
 
-* 1. Data Visualisation
-* 2. Data Cutting and Data Augmentation
-* 3. Image preprocessing
-* 4. Nvidia DNN-Model
-* 5. Data Generator
-* 6. Epoch and Loss
+ 1. Data Visualisation
+ 2. Data Cutting and Data Augmentation
+ 3. Image preprocessing
+ 4. Nvidia DNN-Model
+ 5. Data Generator
+ 6. Epoch and Loss
 
 
 ## 1. Data Visualisation
 ---
 I decided to work with the given Udacity Dataset because I wanted to focus myself on the topic of Data Augmentation. My goal was to train my model so my car is going to pass both tracks only by using Data Augmentation.
-In the first step i visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
+In the first step I visualized the given dataset. As you can see in image 1 the given Dataset has a strong bias related to a steering angle equally zero.
 
-[![Given Dataset](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)
+[![Given Dataset](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/givendataset.png)]
 
 To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
 
 ## 2. Data Cutting and Data Augmentation
 ---
-First I separated all Indices with a steering angle equally zero and all Indices unequally zero. Then I created a Vector which contains all Indices with a steering angle unequally zero. Inside a for loop i searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way i doubled the images to balance my Dataset. In the next step i added my vector containing the flipped images and steering angles and added them to the given dataset. 
+First I created a vector which contains all indices with a steering angle unequally zero. Inside a for loop I searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way I doubled the images to balance my dataset. In the next step I added my vector containing the flipped images and steering angles and added them to the given dataset. 
 
 ![Figure 2](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/augmented_Dataset.png)
 
-As you can see the Dataset still contains a bias to a steering angle equally zero. In this step i downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices.
+As you can see the Dataset still contains a bias to a steering angle equally zero. In this step I downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices.
 In image 3 you can observe the almost balanced dataset:
 
 ![Figure 3](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/Almost_balanced.png)
 
-The cutted Dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. To raise the samples of all steering angles abs(alpha) >= 0.5 I upsampled all steering angles abs(alpha) >= 0.5.
-
-In image 4 are the upsampled steering angles represented:
+The cutted dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. For balancing all steering angles abs(alpha) >= 0.5 has been upsampled, as presented in image 4.
 
 ![Figure 4](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/upsample.png?raw=true)
 
----
-In the last step I added the upsampled indexvectors to the indexvector containing the indices from the given and the flipped dataset. Then the augmented Indexvector has been cutted. The final result is given in image5:
+In the last step I added the all indices of the flipped images to the indexvector. The augmented indexvector contains all indices to all given and flipped images. In the final step the indexvector has been cut. The final result is given in image5:
 ![Figure 5](https://github.com/Chinchilla1988/CarND-Behavioral-Cloning-P3-master/tree/master/CarND-Behavioral-Cloning-P3-master/examples/finalcut.png?raw=true)
 
 ---
 ## 3 Image Preprocessing
 As stated in Chapter 1 I decided to train my model by Data Augmentation not by self driving. That's why I decided to use the following preprocess techniques:
-The Function draw_image decides randomly which image will be drawn by a given Index to feed it to my pipeline and my model. By the randomly set number nb it decides if it's the left, center or right image. The drawn image is given a modified steering angle.
-The Function brightness is scaling the V-Value of the transformed image. The image gets lighter or darker depending on the randomly drawn number.
-The function translate, translate the image horizontally and vertically and is manipulating the corresponding steering angle. The parameters have been tuned empirically.
-The function rot is rotating the image. The steering angle manipulation factor has been tuned empirically  
-As the functionname states this function crops and resizes the image.
+
+The function draw_image decides randomly which image will be drawn by a given Index. All steering angles are adjusted according to their view to teach the car to recover from wandering off the track.
+
+
+Brightness augmentation has been applied to an image randomly. To achieve this effect we transform the image to the HSV-Space and scale the V-Value. Afterwards we transformate the image back to the RGB-Space. It's used to teach the car that the road surface' color varies. Track 1 is darker than the surface of track 2.
+
+By adding a randomly  horizontally translation to the image we teach the car how to recover from wandering off the track. By adding a modified steering angle it's able to find back to the road. The vertical translation teaches the car how to deal with steep roads. if we add a positive vertical translation we teach the car how to behave while driving down a road and vice versa. By a vertical translational shift the steering angle will not be modified.
+
+Also adding rotation allows us to create images from curves which upsamples all images containing curves in the dataset. The steering angle is modified.
+
+In the last step we crop the image to cut out the Hood and the background of the image and resize it to 60*200.
 
 ## 4. Nvidia Model
 
