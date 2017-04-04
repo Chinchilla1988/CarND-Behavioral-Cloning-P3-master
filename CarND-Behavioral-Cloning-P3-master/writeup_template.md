@@ -27,7 +27,7 @@ To balance the given Dataset I decided to cut the given Dataset to approximate a
 ---
 First I created a vector which contains all indices with a steering angle unequally zero. Inside a for loop I searched to every index the corresponding images, flipped them and saved them afterwards in a separate vector. Same has been applied to all corresponding steering angles. That's the way I doubled the images to balance my dataset. In the next step I added my vector containing the flipped images and steering angles and added them to the given dataset. 
 
-![Figure 2](/examples/augmented_Dataset.png?raw=true)
+![Figure 2](/xamples/augmented_Dataset.png?raw=true)
 
 As you can see the Dataset still contains a bias to a steering angle equally zero. In this step I downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices.
 In image 3 you can observe the almost balanced dataset:
