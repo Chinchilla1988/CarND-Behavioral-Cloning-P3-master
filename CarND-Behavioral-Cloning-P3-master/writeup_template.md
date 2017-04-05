@@ -61,7 +61,7 @@ By adding a randomly  horizontally translation to the image we teach the car how
 Also adding rotation allows us to create images from curves which upsamples all images containing curves in the dataset. The steering angle is modified.
 ![Figure 9](examples/rot.png?raw=true)
 
-In the last step we crop the image to cut out the Hood and the background of the image and resize it to 60*200. All preprocessing and data augmentation techniques are presented in the following image:
+In the last step we crop the image to cut out the Hood and the background of the image and resize it to 66*200. All preprocessing and data augmentation techniques are presented in the following image:
 ![Figure 10](examples/pipe.png?raw=true)
 
 ## 4. Nvidia Model
@@ -69,7 +69,7 @@ In the last step we crop the image to cut out the Hood and the background of the
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
 The architecture is presented in image 6.
 
-![Figure 6](examples/nvidia.png?raw=true)
+![Figure 11](examples/nvidia.png?raw=true)
 
 
 
