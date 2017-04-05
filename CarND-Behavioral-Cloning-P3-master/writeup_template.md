@@ -32,6 +32,7 @@ First I created a vector which contains all indices with a steering angle unequa
 As you can see the Dataset still contains a bias to a steering angle equally zero. In this step I downsampled all Indices regarding to a steering angle equally zero to a max sampleset of 100 Indices.
 In image 3 you can observe the almost balanced dataset:
 
+
 ![Figure 3](examples/Almost_balanced.png?raw=true)
 
 The cutted dataset is still not satisfying because it lacks several steering angles in the range of abs(alpha) >= 0.5. For balancing all steering angles abs(alpha) >= 0.5 has been upsampled, as presented in image 4.
