@@ -90,10 +90,11 @@ The architecture is presented in image 6.
 ## 5. Data Generator
 
 The function generator has been modified. It doesn't strip images as stated in the lecture. It receives as Input the given Index as a scalar; center, left and right images and the steering angle as a vector. The image and steering angle is chosen by the given index.
+![Figure 12](examples/generator.PNG?raw=true)
 
 ## 6 Epoch and Loss
 
-Because of the heavy Data augmentation my DNN converge slowly. I had to train my model for 125 Epochs. 
+I had to train my model for 125 Epochs to converge my model aginst a solution. 
 
 Epoch 1: 
 You're running in loop: 1
