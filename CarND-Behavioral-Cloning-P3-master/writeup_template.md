@@ -73,7 +73,7 @@ In the last step we crop the image to cut out the Hood and the background of the
 ## 4. Nvidia Model
 
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
-The architecture is presented in figure 11.
+The architecture is presented in figure 11. The modelhas been fed with images presented in RGB space, not in YUV.
 
 ![Figure 11](examples/nvidia.png?raw=true)
 
