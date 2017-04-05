@@ -53,7 +53,7 @@ Shadowaugmentation has been applied to teach the car how to behave if shadow app
 ![Figure 6](examples/shadow.png?raw=true)
 
 
-Brightness augmentation has been applied to an image randomly. To achieve this effect we transform the image to the HSV-Space and scale the V-Value. Afterwards we transformate the image back to the RGB-Space. It's used to teach the car that the road surface' color varies. Track 1 is darker than the surface of track 2.
+Brightness augmentation has been applied to an image randomly. To achieve this effect we transform the image to the HSV-Space and scale the V-Value. Afterwards we transformate the image back to the RGB-Space. It's used to teach the car that the road surface' color varies. Track 1 is darker than the surface of track 2:
 
 ![Figure 7](examples/bright.png?raw=true)
 
