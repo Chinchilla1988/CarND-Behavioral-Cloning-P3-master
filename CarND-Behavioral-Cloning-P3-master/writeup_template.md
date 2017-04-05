@@ -21,7 +21,7 @@ In the first step I visualized the given dataset. As you can see in image 1 the 
 
 ![Given Dataset](examples/givendataset.png?raw=true)
 
-To balance the given Dataset I decided to cut the given Dataset to approximate a Gaussian distribution.
+To balance the given Dataset I decided to cut the given Dataset.
 
 ## 2. Data Cutting and Data Augmentation
 ---
@@ -47,14 +47,22 @@ As stated in Chapter 1 I decided to train my model by Data Augmentation not by s
 
 The function draw_image decides randomly which image will be drawn by a given Index. All steering angles are adjusted according to their view to teach the car to recover from wandering off the track.
 
+Shadowaugmentation has been applied to teach the car how to behave if shadow appears on the track. Thanks to Vivek Yadav and his great Idea how to cast shadows on Images!
+![Figure 6](examples/shadow.png?raw=true)
+
 
 Brightness augmentation has been applied to an image randomly. To achieve this effect we transform the image to the HSV-Space and scale the V-Value. Afterwards we transformate the image back to the RGB-Space. It's used to teach the car that the road surface' color varies. Track 1 is darker than the surface of track 2.
+![Figure 7](examples/bright.png?raw=true)
+
 
 By adding a randomly  horizontally translation to the image we teach the car how to recover from wandering off the track. By adding a modified steering angle it's able to find back to the road. The vertical translation teaches the car how to deal with steep roads. if we add a positive vertical translation we teach the car how to behave while driving down a road and vice versa. By a vertical translational shift the steering angle will not be modified.
+![Figure 8](examples/translate.png?raw=true)
 
 Also adding rotation allows us to create images from curves which upsamples all images containing curves in the dataset. The steering angle is modified.
+![Figure 9](examples/rot.png?raw=true)
 
-In the last step we crop the image to cut out the Hood and the background of the image and resize it to 60*200.
+In the last step we crop the image to cut out the Hood and the background of the image and resize it to 60*200. All preprocessing and data augmentation techniques are presented in the following image:
+![Figure 10](examples/pipe.png?raw=true)
 
 ## 4. Nvidia Model
 
