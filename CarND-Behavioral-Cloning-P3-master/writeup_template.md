@@ -50,7 +50,7 @@ The function draw_image decides randomly which image will be drawn by a given In
 
 Shadowaugmentation has been applied to teach the car how to behave if shadow appears on the track. Thanks to Vivek Yadav and his great Idea how to cast shadows on Images!
 
-![Figure 6](examples/shadow.png?raw=true)
+![Figure 7](examples/shadow.png?raw=true)
 
 
 Brightness augmentation has been applied to an image randomly. To achieve this effect we transform the image to the HSV-Space and scale the V-Value. Afterwards we transformate the image back to the RGB-Space. It's used to teach the car that the road surface' color varies. Track 1 is darker than the surface of track 2:
