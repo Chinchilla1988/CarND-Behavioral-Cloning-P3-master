@@ -12,7 +12,7 @@
  4. Nvidia DNN-Model
  5. Data Generator
  6. Epoch and Loss
-
+ 7. lessons learned
 
 ## 1. Data Visualisation
 ---
@@ -73,7 +73,7 @@ In the last step we crop the image to cut out the Hood and the background of the
 ## 4. Nvidia Model
 
 I decided to implement the Nvidia Model because it was succesfully implemented to drive a real car.
-The architecture is presented in image 6.
+The architecture is presented in figure 11.
 
 ![Figure 11](examples/nvidia.png?raw=true)
 
@@ -85,7 +85,6 @@ The architecture is presented in image 6.
 
 
 
-# description in here
 
 ## 5. Data Generator
 
@@ -107,9 +106,11 @@ Epoch 5/5
 ## 7 Lessons learned
 
 Data Augmentation is a powerful technique to create your own unique dataset. Also I don't have to waste my time driving by myself to create the necessary data. 
+
 My model drives track 1 fully autonomously.
 
-On Track 2 my model drives mostly autonomous. It fails to detect sharp curves. The rest of the track it drives fully autonomously through track 2.
+On Track 2 my model drives mostly autonomous. It fails to detect sharp curves. For the rest of the track it drives fully autonomously through track 2.
+
 Also my model stops converging at a training loss of 18.72 %. I guess it's stuck in a local minima and if I solve this problem my model drives also through Track 2 by itself. If i have some time left in the upcoming weeks I'll tune my model but for now I have to stop. 
 
 Because the DNN is not deterministic it's very important to feed the DNN with good data. Without good data the model will fail. Also it's very important to choose or create an architecture which can detect all necessary Data to predict a proper steering angle.
