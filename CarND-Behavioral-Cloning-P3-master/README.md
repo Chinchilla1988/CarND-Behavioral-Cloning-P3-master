@@ -10,6 +10,11 @@
  6. Epoch and Loss
  7. lessons learned
 
+
+[Track1](https://youtu.be/4XN_eEFRIXk)
+
+
+https://youtu.be/4XN_eEFRIXk
 ## 1. Data Visualisation
 ---
 I decided to work with the given Udacity Dataset because I wanted to focus myself on the topic of Data Augmentation. My goal was to train my model so my car is going to pass both tracks only by using Data Augmentation.
