@@ -4,6 +4,9 @@ from datetime import datetime
 import os
 import shutil
 
+#import model
+import cv2
+
 import numpy as np
 import socketio
 import eventlet
@@ -42,9 +45,9 @@ class SimplePIController:
 
         return self.Kp * self.error + self.Ki * self.integral
 
-
+#Ki=0.002
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 20
 controller.set_desired(set_speed)
 
 
@@ -53,18 +56,52 @@ def telemetry(sid, data):
     if data:
         # The current steering angle of the car
         steering_angle = data["steering_angle"]
+        type(steering_angle)
+        if "," in steering_angle:
+            steering_angle = steering_angle.replace(",", ".")
+
+        steering_angle = float(steering_angle)
         # The current throttle of the car
         throttle = data["throttle"]
+        type(throttle)
+        if "," in throttle:
+            throttle = throttle.replace(",", ".")
+
+        throttle = float(throttle)
         # The current speed of the car
         speed = data["speed"]
+        type(speed)
+        if "," in speed:
+            speed = speed.replace(",", ".")
+
+        speed = float(speed)
+        
+        
         # The current image from the center camera of the car
         imgString = data["image"]
+
+        
+
+        
         image = Image.open(BytesIO(base64.b64decode(imgString)))
+        
         image_array = np.asarray(image)
+        image=image_array[60:140,0:360]
+        image_array=cv2.resize(image,(200, 66), interpolation = cv2.INTER_LINEAR)
+
+        #image_array=cv2.cvtColor(image_array,cv2.COLOR_RGB2BGR)
+        
+        #image = image[None, :, :, :]
+
+
+        #steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
-        throttle = controller.update(float(speed))
 
+        image=Image.open(BytesIO(base64.b64decode(imgString)))
+        throttle = controller.update(float(speed))
+        #throttle = 1
+        #steering_angle=1
         print(steering_angle, throttle)
         send_control(steering_angle, throttle)
 
@@ -137,3 +174,4 @@ if __name__ == '__main__':
 
     # deploy as an eventlet WSGI server
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app)
+
